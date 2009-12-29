@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Module>
   <ModulePrefs title="好媽媽の溫心叮嚀小工具" 
-    description="bibibobobibobo"
+    description="This is a lovely gadget for all Mothers and who eager to learn about baby caring during pregnancy."
     author="Axa Cheng"
     author_email="axa.cheng@gmail.com"
     height="250"
     width="200"
-    thumbnail="http://lh4.ggpht.com/_0aY-IMY1yWs/SuqrDQcMZFI/AAAAAAAAI6I/uDRbccVXccM/20080826328.jpg" />
+    thumbnail="http://www.howmama.com.tw/Themes/new-test/images/cat15.jpg" />
   <UserPref name="preg_year" display_name="年" default_value="2010" datatype="enum" required="true" >
     <EnumValue value="2010" />
     <EnumValue value="2011" />
@@ -88,36 +88,28 @@
     // Calcuate day by using Math() object
     var days = Math.floor( (p_day.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
     var weeks = Math.floor(days / 7); // Convert to weeks by days() result
-    alert(weeks);
-    //var html = "";  // Create html content
-    //document.write('There are ' + weeks + ' weeks until your p.');
-    
-    // MakeRequest 
+  
+    // Merge value of weeks then send request to GAE URI
+    var url = 'http://pregnancyreminder.appspot.com/' + weeks;
     var params = {};
     params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.TEXT;
-    //params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.POST;
-    var url = 'http://peelame.appspot.com/' + weeks;
     gadgets.io.makeRequest(url, showResult , params);
-    
-    
   }    
 
   function showResult(response) {
-  // alert(response.text);
   // Init gadget block and style
   var element = document.getElementById('my_content');
   element.style.height=250;
   element.style.backgroundColor="White";
     
   // Render
+  var html = "";  // Create html content
   html += 'Your weekday: ' + response.text;
   document.getElementById('my_content').innerHTML = html;
   element.innerHTML = html;
-    
-  // Pass the userprefs for this module instance to the function
-  // (allows users to include multiple module instances on their page)
-  }
+  }  
   
+  // Tell browser to load fist function after scan this page.
   gadgets.util.registerOnLoadHandler(fetchWeekday); 
   
   </script>  
