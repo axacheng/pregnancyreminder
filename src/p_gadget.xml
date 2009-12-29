@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+  <ModulePrefs title="好媽媽の溫心叮嚀小工具" 
+    description="bibibobobibobo"
+    author="Axa Cheng"
+    author_email="axa.cheng@gmail.com"
+    height="250"
+    width="200"
+    thumbnail="http://lh4.ggpht.com/_0aY-IMY1yWs/SuqrDQcMZFI/AAAAAAAAI6I/uDRbccVXccM/20080826328.jpg" />
+  <UserPref name="preg_year" display_name="年" default_value="2010" datatype="enum" required="true" >
+    <EnumValue value="2010" />
+    <EnumValue value="2011" />
+    <EnumValue value="2012" />
+    <EnumValue value="2013" />
+    <EnumValue value="2014" />
+    <EnumValue value="2015" />
+  </UserPref>
+  
+  <UserPref name="preg_month" display_name="月" default_value="1" datatype="enum" required="true" >
+    <EnumValue value="1" />
+    <EnumValue value="2" />
+    <EnumValue value="3" />
+    <EnumValue value="4" />
+    <EnumValue value="5" />
+    <EnumValue value="6" />
+    <EnumValue value="7" />
+    <EnumValue value="8" />
+    <EnumValue value="9" />
+    <EnumValue value="10" />
+    <EnumValue value="11" />
+    <EnumValue value="12" />
+  </UserPref>
+  
+  <UserPref name="preg_date" display_name="日" default_value="1" datatype="enum">
+    <EnumValue value="1" />
+    <EnumValue value="2" />
+    <EnumValue value="3" />
+    <EnumValue value="4" />
+    <EnumValue value="5" />
+    <EnumValue value="6" />
+    <EnumValue value="7" />
+    <EnumValue value="8" />
+    <EnumValue value="9" />
+    <EnumValue value="10" />
+    <EnumValue value="11" />
+    <EnumValue value="12" />
+    <EnumValue value="13" />
+    <EnumValue value="14" />
+    <EnumValue value="15" />
+    <EnumValue value="16" />
+    <EnumValue value="17" />
+    <EnumValue value="18" />
+    <EnumValue value="19" />
+    <EnumValue value="20" />
+    <EnumValue value="21" />
+    <EnumValue value="22" />
+    <EnumValue value="23" />
+    <EnumValue value="24" />
+    <EnumValue value="25" />
+    <EnumValue value="26" />
+    <EnumValue value="27" />
+    <EnumValue value="28" />
+    <EnumValue value="29" />
+    <EnumValue value="30" />
+    <EnumValue value="31" />
+  </UserPref>
+  
+  <Content view="home,canvas" type="html">
+  <![CDATA[ 
+  
+  <div id="my_content" />
+  <script language="javascript">
+  
+  var prefs = new gadgets.Prefs(); // Get userprefs object
+  var get_Year = prefs.getInt("preg_year");
+  var get_Month = prefs.getInt("preg_month");
+  var get_Date = prefs.getInt("preg_date");
+    
+    
+  function fetchWeekday() {
+    var today = new Date(); // Set current day object
+    var p_day = new Date(); // Set p day object
+  
+    p_day.setYear(get_Year); // Fetch data from get_Year() then sets to p_day
+    p_day.setMonth(get_Month - 1); // Append get_Month value to p_day
+    p_day.setDate(get_Date);      // same as above
+    
+    // Calcuate day by using Math() object
+    var days = Math.floor( (p_day.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+    var weeks = Math.floor(days / 7); // Convert to weeks by days() result
+    alert(weeks);
+    //var html = "";  // Create html content
+    //document.write('There are ' + weeks + ' weeks until your p.');
+    
+    // MakeRequest 
+    var params = {};
+    params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.TEXT;
+    //params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.POST;
+    var url = 'http://peelame.appspot.com/' + weeks;
+    gadgets.io.makeRequest(url, showResult , params);
+    
+    
+  }    
+
+  function showResult(response) {
+  // alert(response.text);
+  // Init gadget block and style
+  var element = document.getElementById('my_content');
+  element.style.height=250;
+  element.style.backgroundColor="White";
+    
+  // Render
+  html += 'Your weekday: ' + response.text;
+  document.getElementById('my_content').innerHTML = html;
+  element.innerHTML = html;
+    
+  // Pass the userprefs for this module instance to the function
+  // (allows users to include multiple module instances on their page)
+  }
+  
+  gadgets.util.registerOnLoadHandler(fetchWeekday); 
+  
+  </script>  
+  ]]> 
+  </Content>
+</Module>
