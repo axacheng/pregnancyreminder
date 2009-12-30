@@ -1,0 +1,27 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>Add reminder</title>
+
+<body>
+<h2>後端管理</h2>
+
+{% if query %}
+{% for query in query %}
+<form method="post" action="/edit/{{ query.weekday }}">
+  <input type="hidden" name="key" value="{{ query.key }}">
+  
+  <label> Weekday </label><br>  
+  <div class="weekday"> 第 {{ query.weekday }}週 </div>
+  <br>
+  <label> Description/Reminder </label><br>  
+  <textarea name="description" rows="10" cols="30"> {{ query.description }} </textarea>
+  <p><input type="submit" value="確定修改"></p>
+</form>
+{% endfor %}
+{% endif %}
+
+<hr>
+
+</body>
+</html>
