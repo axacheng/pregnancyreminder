@@ -27,13 +27,14 @@ class PostInfo(webapp.RequestHandler):
   The user need to user Goolge account to login page then should be able to 
   update data into db_model.PregnancyGadget"""
   def get(self):
-    query = db_model.PregnancyGadget.get_by_key_name('preg')
+    query = db_model.PregnancyGadget.all()
+    query.order('-weekday')
+    
     if query is None:
       self.response.out.write('Please run /init first')
     else:
-      self.response.out.write(template.render('ui/post.html', { 
-                                            'weekday': query.weekday, 
-                                            'description': query.description}))
+      self.response.out.write(template.render('ui/post.html', 
+                                             {'query_from_preg': query}))
     
   def post(self):
     user_login = users.get_current_user()
@@ -51,6 +52,20 @@ class PostInfo(webapp.RequestHandler):
       self.redirect(users.create_login_url(self.request.uri))
     
     
+class EditPost(webapp.RequestHandler):
+  def get(self, weekday):
+    query = db_model.PregnancyGadget.all()
+    query.filter('weekday =', int(weekday))
+    self.response.out.write(template.render('ui/edit.html', {'query': query}))
+  
+  def post(self, weekday):
+    key = self.request.get('key')
+    query = db_model.PregnancyGadget.get(key)
+    query.description = self.request.get('description')
+    query.put()
+    self.redirect('/add')
+       
+        
 class MainPage(webapp.RequestHandler):
   """ Show result from db_model.PregnancyGadget then covert to JSON object 
   
@@ -72,9 +87,10 @@ class MainPage(webapp.RequestHandler):
                       
 def main():
     app = webapp.WSGIApplication([
-                                  ('/(\d+)', MainPage),
+                                  ('/init', Init),
                                   ('/add', PostInfo), 
-                                  ('/init', Init),], debug=True)
+                                  ('/edit/(\d+)', EditPost),
+                                  ('/(\d+)', MainPage),], debug=True)
     run_wsgi_app(app)
 
 

@@ -4,7 +4,7 @@
 <title>Add reminder</title>
 
 <body>
-<h2>ccc</h2>
+<h2>後端管理</h2>
 
 <form method="post" action="/add">
   <fieldset>
@@ -16,6 +16,17 @@
     <p><input type="submit" value="POST"></p>
   </fieldset>
 </form>
+
+<hr>
+{% if query_from_preg %}
+  {% for query in query_from_preg %}
+    <div class="weekday">第 {{ query.weekday }}週</div>
+    <div class="description">要注意的事項:{{ query.description}}</div>
+    <a href="/edit/{{query.weekday}}">修改</a>
+    <hr>
+  {% endfor %}
+{% endif %}
+
 
 </body>
 </html>
