@@ -41,12 +41,11 @@ class PostInfo(webapp.RequestHandler):
       weekday = self.request.get('weekday')
       description = self.request.get('description')
       try:
-        commit_db = db_model.PregnancyGadget(key_name="preg",
-                                             weekday=weekday, 
+        commit_db = db_model.PregnancyGadget(weekday=int(weekday), 
                                              description=description)
         commit_db.put()
-        self.redirect('/post')
-      except BadValueError:
+        self.redirect('/add')
+      except ValueError:
         self.response.out.write("""Error occur during update db...""")
     else:
       self.redirect(users.create_login_url(self.request.uri))
