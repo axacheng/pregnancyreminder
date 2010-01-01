@@ -10,7 +10,9 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 
 
 
-class Init(webapp.RequestHandler):  
+class Init(webapp.RequestHandler):
+  """ Create first entry to db_model.PregnancyGadget """
+  
   def get(self):
     query = db_model.PregnancyGadget.get_by_key_name('preg')
     if query is None:
@@ -53,6 +55,8 @@ class PostInfo(webapp.RequestHandler):
     
     
 class EditPost(webapp.RequestHandler):
+  """ User can edit exist data description by weekday """
+  
   def get(self, weekday):
     query = db_model.PregnancyGadget.all()
     query.filter('weekday =', int(weekday))
@@ -80,10 +84,15 @@ class MainPage(webapp.RequestHandler):
     if len(mesg) == 0:
       print 'weekday is invalid'
     else:
-      self.response.out.write(simplejson.dumps(mesg))  
+      for result in query:
+        self.response.out.write(simplejson.dumps(result))
+      #for result in query:
+      #self.response.out.write(result.description)
+      #self.response.out.write(simplejson.dumps(mesg))  
       #self.response.out.write('key: %s <br> value: %s <br>' % (
       #                        result.weekday,
       #                        result.description))
+  
                       
 def main():
     app = webapp.WSGIApplication([

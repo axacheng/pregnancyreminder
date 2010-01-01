@@ -92,7 +92,7 @@
     // Merge value of weeks then send request to GAE URI
     var url = 'http://pregnancyreminder.appspot.com/' + weeks;
     var params = {};
-    params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.TEXT;
+    params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
     gadgets.io.makeRequest(url, showResult , params);
   }    
 
