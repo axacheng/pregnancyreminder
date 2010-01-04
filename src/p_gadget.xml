@@ -1,4 +1,4 @@
-<? xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Module>
   <ModulePrefs title="好媽媽の溫心叮嚀小工具" 
     description="This is a lovely gadget for all Mothers and who eager to learn about baby caring during pregnancy."
@@ -104,7 +104,7 @@
     
   // Render
   var html = "";  // Create html content
-  html += 'Your weekday: ' + response.text;
+  html += response.text;
   document.getElementById('my_content').innerHTML = html;
   element.innerHTML = html;
   }  
