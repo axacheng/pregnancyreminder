@@ -93,21 +93,30 @@
     var url = 'http://pregnancyreminder.appspot.com/' + weeks;
     var params = {};
     params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
-    gadgets.io.makeRequest(url, showResult , params);
+    
+    gadgets.io.makeRequest(url, showResult, params);
   }    
 
+      
+
   function showResult(response) {
-  // Init gadget block and style
-  var element = document.getElementById('my_content');
-  element.style.height=250;
-  element.style.backgroundColor="White";
-    
-  // Render
-  var html = "";  // Create html content
-  html += response.text;
-  document.getElementById('my_content').innerHTML = html;
-  element.innerHTML = html;
-  }  
+    // Init gadget block and style
+    var element = document.getElementById('my_content');
+    element.style.height=250;
+    element.style.backgroundColor="White";
+  
+    //alert(response.rc);
+    var data = response.data;
+  
+    // Render
+    var html = "";  // Create html content
+    for (i in data)
+      for(j in data[i])
+      html += data[i][j];
+  
+    document.getElementById('my_content').innerHTML = html;
+    element.innerHTML = html;
+  }
   
   // Tell browser to load fist function after scan this page.
   gadgets.util.registerOnLoadHandler(fetchWeekday); 

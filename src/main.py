@@ -1,4 +1,4 @@
-#coding=utf-8
+# -*- coding: utf-8 -*-
 
 import db_model
 
@@ -6,6 +6,7 @@ from django.utils import simplejson
 from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
+from google.appengine.ext.webapp.util import login_required
 from google.appengine.ext.webapp.util import run_wsgi_app
 
 
@@ -46,6 +47,8 @@ class PostInfo(webapp.RequestHandler):
       try:
         commit_db = db_model.PregnancyGadget(weekday=int(weekday), 
                                              description=description)
+        #import sys
+        #print >> sys.stderr, type(description)
         commit_db.put()
         self.redirect('/add')
       except ValueError:
@@ -56,6 +59,7 @@ class PostInfo(webapp.RequestHandler):
     
 class EditPost(webapp.RequestHandler):
   """ User can edit exist data description by weekday """
+  @login_required
   def get(self, weekday):
     query = db_model.PregnancyGadget.all()
     query.filter('weekday =', int(weekday))
@@ -72,7 +76,8 @@ class EditPost(webapp.RequestHandler):
 class ListPost(webapp.RequestHandler):
   """ Show result from db_model.PregnancyGadget then covert to JSON object 
   
-  We only fetch 50 records at the time and use simplejson convert context to 
+  We fetch the description from datastore per your weekday integer 
+  and use simplejson.dumps convert context to json object.  
   JSON object. 
   """
   db_model.PregnancyGadget.all() ### TODO, we cannot remove this line otherwise db_model cannot be initialed.
@@ -80,13 +85,11 @@ class ListPost(webapp.RequestHandler):
     response = []
     query = db_model.PregnancyGadget.all()
     query.filter('weekday =', int(weekday))
-    #for result in query:
-    #  self.response.out.write({'show': simplejson.dumps(result)})
+    
     for result in query:
       response.append({weekday: result.description})
-    self.response.out.write(template.render('ui/show.html', 
-                                            {'show': simplejson.dumps(response)}))
-    
+    self.response.out.write(simplejson.dumps(response))
+     
                       
 def main():
     app = webapp.WSGIApplication([
