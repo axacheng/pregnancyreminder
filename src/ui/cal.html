@@ -1,0 +1,28 @@
+<html>
+<head> 
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8"> 
+  <script type="text/javascript" src="/static/jquery-1.4.1.js" />
+	<script type="text/javascript" src="/static/jquery.datepick.js" />
+	<script type="text/javascript" src="/static/jquery.datepick-zh-TW.js" />
+	<script type="text/javascript" src="/static/jquery-ui-1.7.2.custom.min.js" />
+		<style  type="text/css">@import "/static/redmond.datepick.css";</style> 
+	<script language="javascript"> 
+    $(function() {
+      $('#ccc').datepick({showOn:'both', showAnim:'drop', showStatus: true,
+			                    mandatory: true, numberOfMonths:3, highlightWeek: true,
+													minDate: -7, maxDate: '+5Y', dateFormat:$.datepick.W3C,
+													buttonImageOnly: true, 
+													buttonImage: '/static/calendar.gif',
+												},$.datepick.regional['zh-TW']);
+			
+    });
+  </script> 
+</head>
+<body>
+
+
+Date:<input type="text" id="ccc" class="datepicker">
+
+
+</body>	
+</html>

@@ -14,4 +14,31 @@
 	<natures>
 		<nature>org.python.pydev.pythonNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/static/calendar.gif</name>
+			<type>1</type>
+			<location>C:/Documents and Settings/axa/My Documents/myapps/pregnancyreminder/src/static/calendar.gif</location>
+		</link>
+		<link>
+			<name>src/static/jquery-ui-1.7.2.custom.min.js</name>
+			<type>1</type>
+			<location>C:/Documents and Settings/axa/My Documents/myapps/pregnancyreminder/src/static/jquery-ui-1.7.2.custom.min.js</location>
+		</link>
+		<link>
+			<name>src/static/jquery.datepick-zh-TW.js</name>
+			<type>1</type>
+			<location>C:/Documents and Settings/axa/My Documents/myapps/pregnancyreminder/src/static/jquery.datepick-zh-TW.js</location>
+		</link>
+		<link>
+			<name>src/static/jquery.datepick.js</name>
+			<type>1</type>
+			<location>C:/Documents and Settings/axa/My Documents/myapps/pregnancyreminder/src/static/jquery.datepick.js</location>
+		</link>
+		<link>
+			<name>src/static/redmond.datepick.css</name>
+			<type>1</type>
+			<location>C:/Documents and Settings/axa/My Documents/myapps/pregnancyreminder/src/static/redmond.datepick.css</location>
+		</link>
+	</linkedResources>
 </projectDescription>

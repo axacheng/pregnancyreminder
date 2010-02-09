@@ -73,6 +73,7 @@ class EditPost(webapp.RequestHandler):
     self.redirect('/add')
        
 
+    
 class ListPost(webapp.RequestHandler):
   """ Show result from db_model.PregnancyGadget then covert to JSON object 
   
@@ -91,12 +92,17 @@ class ListPost(webapp.RequestHandler):
     self.response.out.write(simplejson.dumps(response))
      
                       
+class Cal(webapp.RequestHandler):
+  def get(self):
+    self.response.out.write(template.render('ui/cal.html', {}))
+
 def main():
     app = webapp.WSGIApplication([
                                   ('/init', Init),
                                   ('/add', PostInfo), 
                                   ('/edit/(\d+)', EditPost),
-                                  ('/(\d+)', ListPost),], debug=True)
+                                  ('/(\d+)', ListPost),
+                                  ('/c', Cal)], debug=True)
     run_wsgi_app(app)
 
 
